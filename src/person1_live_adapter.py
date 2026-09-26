@@ -645,64 +645,31 @@ class Person1LiveAdapter:
                         # index 9  = left wrist
                         # index 10 = right wrist
                         if len(person_kpts) >= 11:
-
-                            lw_data = person_kpts[9]
-                            rw_data = person_kpts[10]
-
                             def _val(item):
                                 return float(
                                     item.item()
-                                    if hasattr(
-                                        item,
-                                        "item"
-                                    )
+                                    if hasattr(item, "item")
                                     else item
                                 )
 
+                            def _kpt_dict(idx):
+                                if idx < len(person_kpts):
+                                    k = person_kpts[idx]
+                                    return {
+                                        "x": round(_val(k[0]), 1),
+                                        "y": round(_val(k[1]), 1),
+                                        "confidence": round(_val(k[2]), 2)
+                                    }
+                                return None
+
                             pose_dict = {
                                 "person_track_id": 1,
-
-                                "left_wrist": {
-                                    "x": round(
-                                        _val(
-                                            lw_data[0]
-                                        ),
-                                        1
-                                    ),
-                                    "y": round(
-                                        _val(
-                                            lw_data[1]
-                                        ),
-                                        1
-                                    ),
-                                    "confidence": round(
-                                        _val(
-                                            lw_data[2]
-                                        ),
-                                        2
-                                    )
-                                },
-
-                                "right_wrist": {
-                                    "x": round(
-                                        _val(
-                                            rw_data[0]
-                                        ),
-                                        1
-                                    ),
-                                    "y": round(
-                                        _val(
-                                            rw_data[1]
-                                        ),
-                                        1
-                                    ),
-                                    "confidence": round(
-                                        _val(
-                                            rw_data[2]
-                                        ),
-                                        2
-                                    )
-                                }
+                                "left_shoulder": _kpt_dict(5),
+                                "right_shoulder": _kpt_dict(6),
+                                "left_elbow": _kpt_dict(7),
+                                "right_elbow": _kpt_dict(8),
+                                "left_wrist": _kpt_dict(9),
+                                "right_wrist": _kpt_dict(10),
                             }
 
                             self._last_pose_dict = (

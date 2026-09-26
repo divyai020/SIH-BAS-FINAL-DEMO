@@ -87,24 +87,22 @@ class Person1Adapter:
         if person_track_id is not None:
             person_track_id = int(person_track_id)
 
-        left_wrist_raw = raw_pose.get("left_wrist", {})
-        left_wrist = WristPose(
-            x=float(left_wrist_raw["x"]) if left_wrist_raw.get("x") is not None else None,
-            y=float(left_wrist_raw["y"]) if left_wrist_raw.get("y") is not None else None,
-            confidence=float(left_wrist_raw.get("confidence", 0.0))
-        )
-
-        right_wrist_raw = raw_pose.get("right_wrist", {})
-        right_wrist = WristPose(
-            x=float(right_wrist_raw["x"]) if right_wrist_raw.get("x") is not None else None,
-            y=float(right_wrist_raw["y"]) if right_wrist_raw.get("y") is not None else None,
-            confidence=float(right_wrist_raw.get("confidence", 0.0))
-        )
+        def _parse_wp(key: str) -> WristPose:
+            raw = raw_pose.get(key, {})
+            return WristPose(
+                x=float(raw["x"]) if raw.get("x") is not None else None,
+                y=float(raw["y"]) if raw.get("y") is not None else None,
+                confidence=float(raw.get("confidence", 0.0))
+            )
 
         pose = PoseData(
             person_track_id=person_track_id,
-            left_wrist=left_wrist,
-            right_wrist=right_wrist
+            left_wrist=_parse_wp("left_wrist"),
+            right_wrist=_parse_wp("right_wrist"),
+            left_elbow=_parse_wp("left_elbow"),
+            right_elbow=_parse_wp("right_elbow"),
+            left_shoulder=_parse_wp("left_shoulder"),
+            right_shoulder=_parse_wp("right_shoulder")
         )
 
         # Parse hand-object interaction details

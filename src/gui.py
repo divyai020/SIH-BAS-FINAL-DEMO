@@ -761,20 +761,49 @@ class ExperimentGUI:
                                     cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 0, 0), 1, cv2.LINE_AA)
                         detected_labels.append(obj.class_name)
 
-                # --- Draw wrist keypoints ---
-                if frame_obj.pose.right_wrist and frame_obj.pose.right_wrist.x:
-                    rx = int(frame_obj.pose.right_wrist.x)
-                    ry = int(frame_obj.pose.right_wrist.y)
-                    cv2.circle(draw, (rx, ry), 10, (0, 255, 0), -1)
-                    cv2.putText(draw, "R", (rx - 5, ry + 5),
-                                cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1)
+                # --- Draw Pose Skeleton Keypoints & Connections ---
+                pose_p = frame_obj.pose
 
-                if frame_obj.pose.left_wrist and frame_obj.pose.left_wrist.x:
-                    lx = int(frame_obj.pose.left_wrist.x)
-                    ly = int(frame_obj.pose.left_wrist.y)
-                    cv2.circle(draw, (lx, ly), 10, (255, 100, 0), -1)
-                    cv2.putText(draw, "L", (lx - 5, ly + 5),
-                                cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
+                def _pt(wp):
+                    if wp and wp.x is not None and wp.y is not None and wp.x > 0 and wp.y > 0:
+                        return (int(wp.x), int(wp.y))
+                    return None
+
+                rs = _pt(pose_p.right_shoulder)
+                re = _pt(pose_p.right_elbow)
+                rw = _pt(pose_p.right_wrist)
+
+                ls = _pt(pose_p.left_shoulder)
+                le = _pt(pose_p.left_elbow)
+                lw = _pt(pose_p.left_wrist)
+
+                # Right Arm Skeleton (Lime Green)
+                if rs and re:
+                    cv2.line(draw, rs, re, (0, 255, 0), 3)
+                if re and rw:
+                    cv2.line(draw, re, rw, (0, 255, 0), 3)
+                if rs:
+                    cv2.circle(draw, rs, 6, (0, 255, 0), -1)
+                if re:
+                    cv2.circle(draw, re, 6, (0, 255, 0), -1)
+                if rw:
+                    cv2.circle(draw, rw, 10, (0, 255, 0), -1)
+                    cv2.putText(draw, "R", (rw[0] - 5, rw[1] + 4),
+                                cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 2)
+
+                # Left Arm Skeleton (Cyan)
+                if ls and le:
+                    cv2.line(draw, ls, le, (255, 255, 0), 3)
+                if le and lw:
+                    cv2.line(draw, le, lw, (255, 255, 0), 3)
+                if ls:
+                    cv2.circle(draw, ls, 6, (255, 255, 0), -1)
+                if le:
+                    cv2.circle(draw, le, 6, (255, 255, 0), -1)
+                if lw:
+                    cv2.circle(draw, lw, 10, (255, 100, 0), -1)
+                    cv2.putText(draw, "L", (lw[0] - 5, lw[1] + 4),
+                                cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
 
                 # --- Detection summary bar at bottom ---
                 bar_h = 22

@@ -18,6 +18,10 @@ class PoseData:
     person_track_id: Optional[int] = None
     left_wrist: WristPose = field(default_factory=WristPose)
     right_wrist: WristPose = field(default_factory=WristPose)
+    left_elbow: WristPose = field(default_factory=WristPose)
+    right_elbow: WristPose = field(default_factory=WristPose)
+    left_shoulder: WristPose = field(default_factory=WristPose)
+    right_shoulder: WristPose = field(default_factory=WristPose)
 
 
 @dataclass
