@@ -13,7 +13,14 @@ from typing import Dict, List, Optional, Tuple, Any
 from src.state_machine import StateUpdate
 
 def _tts_worker_loop(q: queue.Queue):
-    audio_dir = r"C:\Users\Divya\Downloads\experiment_audio_stepwise"
+    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+    candidate_dirs = [
+        os.path.join(project_root, "audio"),
+        os.path.join(project_root, "experiment_audio_stepwise"),
+        os.path.expanduser("~/Downloads/experiment_audio_stepwise"),
+        r"C:\Users\Divya\Downloads\experiment_audio_stepwise"
+    ]
+    audio_dir = next((d for d in candidate_dirs if os.path.isdir(d)), candidate_dirs[0])
     while True:
         msg = q.get()
         if msg is None:
