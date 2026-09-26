@@ -206,7 +206,7 @@ class ExperimentStateMachine:
 
         SCRIPTED_ERROR_STEP_INDEX = 1  # Step 2
 
-        if self.current_index == SCRIPTED_ERROR_STEP_INDEX and self.scripted_error_enabled and 5.5 <= elapsed < 11.0:
+        if self.current_index == SCRIPTED_ERROR_STEP_INDEX and self.scripted_error_enabled and 5.5 <= elapsed < 14.5:
             # Directly build and return a clean WRONG_OBJECT error StateUpdate
             # This bypasses the error_detector so the log shows a single, clean entry.
             observed.action = "RETRIEVE_YELLOW_BOX"
@@ -223,8 +223,8 @@ class ExperimentStateMachine:
                 msg=f"Warning: Incorrect object interaction detected. Expected 'RETRIEVE_RED_BOX'."
             )
 
-        if self.current_index == SCRIPTED_ERROR_STEP_INDEX:
-            if elapsed >= 11.0:
+        if self.current_index == SCRIPTED_ERROR_STEP_INDEX and self.scripted_error_enabled:
+            if elapsed >= 14.5:
                 # Force correct action match → advance
                 obs_action = curr_def.action
                 self.match_counter = self.required_confirmations
