@@ -777,6 +777,35 @@ class ExperimentGUI:
                 le = _pt(pose_p.left_elbow)
                 lw = _pt(pose_p.left_wrist)
 
+                nose = _pt(pose_p.nose)
+                l_eye = _pt(pose_p.left_eye)
+                r_eye = _pt(pose_p.right_eye)
+                l_ear = _pt(pose_p.left_ear)
+                r_ear = _pt(pose_p.right_ear)
+
+                # Shoulder-to-Shoulder Line
+                if rs and ls:
+                    cv2.line(draw, rs, ls, (0, 200, 255), 2)
+
+                # Head & Facial Skeleton (Eyes, Nose, Ears)
+                if nose:
+                    cv2.circle(draw, nose, 5, (255, 0, 255), -1)  # Magenta Nose
+                if l_eye:
+                    cv2.circle(draw, l_eye, 4, (255, 255, 0), -1)  # Cyan Left Eye
+                if r_eye:
+                    cv2.circle(draw, r_eye, 4, (255, 255, 0), -1)  # Cyan Right Eye
+                if l_ear:
+                    cv2.circle(draw, l_ear, 4, (0, 255, 255), -1)  # Yellow Left Ear
+                if r_ear:
+                    cv2.circle(draw, r_ear, 4, (0, 255, 255), -1)  # Yellow Right Ear
+
+                if l_eye and r_eye:
+                    cv2.line(draw, l_eye, r_eye, (255, 255, 0), 1)
+                if nose and l_eye:
+                    cv2.line(draw, nose, l_eye, (255, 255, 0), 1)
+                if nose and r_eye:
+                    cv2.line(draw, nose, r_eye, (255, 255, 0), 1)
+
                 # Right Arm Skeleton (Lime Green)
                 if rs and re:
                     cv2.line(draw, rs, re, (0, 255, 0), 3)

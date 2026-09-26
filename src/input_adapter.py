@@ -102,7 +102,12 @@ class Person1Adapter:
             left_elbow=_parse_wp("left_elbow"),
             right_elbow=_parse_wp("right_elbow"),
             left_shoulder=_parse_wp("left_shoulder"),
-            right_shoulder=_parse_wp("right_shoulder")
+            right_shoulder=_parse_wp("right_shoulder"),
+            nose=_parse_wp("nose"),
+            left_eye=_parse_wp("left_eye"),
+            right_eye=_parse_wp("right_eye"),
+            left_ear=_parse_wp("left_ear"),
+            right_ear=_parse_wp("right_ear")
         )
 
         # Parse hand-object interaction details

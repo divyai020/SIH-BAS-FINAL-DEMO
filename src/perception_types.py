@@ -22,6 +22,11 @@ class PoseData:
     right_elbow: WristPose = field(default_factory=WristPose)
     left_shoulder: WristPose = field(default_factory=WristPose)
     right_shoulder: WristPose = field(default_factory=WristPose)
+    nose: WristPose = field(default_factory=WristPose)
+    left_eye: WristPose = field(default_factory=WristPose)
+    right_eye: WristPose = field(default_factory=WristPose)
+    left_ear: WristPose = field(default_factory=WristPose)
+    right_ear: WristPose = field(default_factory=WristPose)
 
 
 @dataclass

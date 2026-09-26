@@ -664,6 +664,11 @@ class Person1LiveAdapter:
 
                             pose_dict = {
                                 "person_track_id": 1,
+                                "nose": _kpt_dict(0),
+                                "left_eye": _kpt_dict(1),
+                                "right_eye": _kpt_dict(2),
+                                "left_ear": _kpt_dict(3),
+                                "right_ear": _kpt_dict(4),
                                 "left_shoulder": _kpt_dict(5),
                                 "right_shoulder": _kpt_dict(6),
                                 "left_elbow": _kpt_dict(7),
